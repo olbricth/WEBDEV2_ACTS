@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${formTitle}">Car Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center; /* center title and link */
+        }
+        form {
+            display: inline-block; /* allows horizontal centering */
+            text-align: left;      /* keep labels and inputs aligned neatly */
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        input, select, button {
+            margin: 5px 0;
+            padding: 6px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            width: auto;
+            display: block;
+            margin: 10px auto;
+        }
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+<h1 th:text="${formTitle}">Car Form</h1>
+
+
+<form th:action="@{${actionUrl}}" th:object="${car}" method="post">
+    <input type="hidden" th:field="*{carId}" />
+    License Plate: <input type="text" th:field="*{licensePlateNumber}" required/><br/><br/>
+    Make: <input type="text" th:field="*{make}" required/><br/><br/>
+    Model: <input type="text" th:field="*{model}" required/><br/><br/>
+    Year: <input type="number" th:field="*{year}" required/><br/><br/>
+    Color: <input type="text" th:field="*{color}" required/><br/><br/>
+
+
+
+
+    Body Type:
+    <select th:field="*{bodyType}">
+        <option value="Sedan">Sedan</option>
+        <option value="SUV">SUV</option>
+        <option value="Hatchback">Hatchback</option>
+    </select><br/><br/>
+
+    Engine Type:
+    <select th:field="*{engineType}">
+        <option value="Gasoline">Gasoline</option>
+        <option value="Diesel">Diesel</option>
+        <option value="Electric">Electric</option>
+        <option value="Hybrid">Hybrid</option>
+    </select><br/><br/>
+
+    Transmission:
+    <select th:field="*{transmission}">
+        <option value="Automatic">Automatic</option>
+        <option value="Manual">Manual</option>
+    </select><br/><br/>
+    <button type="submit">Submit</button>
+</form>
+<br><br>
+<a href="/">Back to list</a>
+
+
+</body>
+</html>
+

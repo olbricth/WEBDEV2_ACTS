@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Car List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center; /* center heading + link */
+        }
+        table {
+            margin: auto; /* center the table itself */
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px 12px;
+            border: 1px solid black;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            margin-right: 10px;
+            text-decoration: none;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+<h1>Car List</h1>
+<a href="/add">Add New Car</a>
+<br><br>
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>License Plate</th>
+        <th>Make</th>
+        <th>Model</th>
+        <th>Year</th>
+        <th>Color</th>
+        <th>Body Type</th>
+        <th>Engine Type</th>
+        <th>Transmission</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="car : ${cars}">
+        <td th:text="${car.carId}"></td>
+        <td th:text="${car.licensePlateNumber}"></td>
+        <td th:text="${car.make}"></td>
+        <td th:text="${car.model}"></td>
+        <td th:text="${car.year}"></td>
+        <td th:text="${car.color}"></td>
+        <td th:text="${car.bodyType}"></td>
+        <td th:text="${car.engineType}"></td>
+        <td th:text="${car.transmission}"></td>
+        <td>
+            <a th:href="@{'/edit/' + ${car.carId}}">Edit</a>
+            <a th:href="@{/delete/{id}(id=${car.carId})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
+
