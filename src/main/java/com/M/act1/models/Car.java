@@ -1,4 +1,4 @@
-package com.M.act1;
+package com.M.act1.models;
 import jakarta.persistence.*;
 
 @Entity

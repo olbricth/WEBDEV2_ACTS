@@ -1,4 +1,4 @@
-package com.M.act1;
+package com.M.act1.utils;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

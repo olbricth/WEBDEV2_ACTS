@@ -1,5 +1,7 @@
-package com.M.act1;
+package com.M.act1.controllers;
 
+import com.M.act1.models.Car;
+import com.M.act1.service.CarService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,20 +33,17 @@ public class CarController {
         return "redirect:/";
     }
 
+
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        return carService.getCarById(id)
-                .map(car -> {
-                    model.addAttribute("car", car);
-                    return "form";
-                })
-                .orElse("redirect:/");
+        Car car = carService.getCarById(id); // Will throw exception if not found
+        model.addAttribute("car", car);
+        return "form";
     }
 
     @PostMapping("/edit/{id}")
     public String updateCar(@PathVariable Long id, @ModelAttribute Car car) {
-        car.setCarId(id);
-        carService.updateCar(car);
+        carService.updateCar(id, car);
         return "redirect:/";
     }
 

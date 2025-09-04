@@ -1,5 +1,7 @@
 package com.M.act1;
 
+import com.M.act1.repository.CarRepository;
+import com.M.act1.models.Car;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +31,7 @@ public class DbTester implements CommandLineRunner {
         // Save the car to DB
         carRepository.save(car);
 
-        // Print all cars from DB
+            // Print all cars from DB
         carRepository.findAll().forEach(carRow -> {
             System.out.println(
                     carRow.getLicensePlateNumber() + " " +
