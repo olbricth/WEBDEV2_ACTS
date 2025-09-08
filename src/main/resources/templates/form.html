@@ -39,24 +39,30 @@
 <body>
 <h1 th:text="${formTitle}">Car Form</h1>
 
-
-<form th:action="@{${actionUrl}}" th:object="${car}" method="post">
+<form th:action="@{${car.carId} != null ? '/edit/' + ${car.carId} : '/add'}" th:object="${car}" method="post">
     <input type="hidden" th:field="*{carId}" />
-    License Plate: <input type="text" th:field="*{licensePlateNumber}" required/><br/><br/>
-    Make: <input type="text" th:field="*{make}" required/><br/><br/>
-    Model: <input type="text" th:field="*{model}" required/><br/><br/>
-    Year: <input type="number" th:field="*{year}" required/><br/><br/>
-    Color: <input type="text" th:field="*{color}" required/><br/><br/>
 
+    License Plate: <input type="text" th:field="*{licensePlateNumber}" />
+    <div th:if="${#fields.hasErrors('licensePlateNumber')}" th:errors="*{licensePlateNumber}" class="error"></div>
 
+    Make: <input type="text" th:field="*{make}" />
+    <div th:if="${#fields.hasErrors('make')}" th:errors="*{make}" class="error"></div>
 
+    Model: <input type="text" th:field="*{model}" />
+    <div th:if="${#fields.hasErrors('model')}" th:errors="*{model}" class="error"></div>
+
+    Year: <input type="number" th:field="*{year}" />
+    <div th:if="${#fields.hasErrors('year')}" th:errors="*{year}" class="error"></div>
+
+    Color: <input type="text" th:field="*{color}" />
+    <div th:if="${#fields.hasErrors('color')}" th:errors="*{color}" class="error"></div>
 
     Body Type:
     <select th:field="*{bodyType}">
         <option value="Sedan">Sedan</option>
         <option value="SUV">SUV</option>
         <option value="Hatchback">Hatchback</option>
-    </select><br/><br/>
+    </select>
 
     Engine Type:
     <select th:field="*{engineType}">
@@ -64,19 +70,18 @@
         <option value="Diesel">Diesel</option>
         <option value="Electric">Electric</option>
         <option value="Hybrid">Hybrid</option>
-    </select><br/><br/>
+    </select>
 
     Transmission:
     <select th:field="*{transmission}">
         <option value="Automatic">Automatic</option>
         <option value="Manual">Manual</option>
-    </select><br/><br/>
+    </select>
+
     <button type="submit">Submit</button>
 </form>
-<br><br>
-<a href="/">Back to list</a>
 
+<a href="/">Back to list</a>
 
 </body>
 </html>
-

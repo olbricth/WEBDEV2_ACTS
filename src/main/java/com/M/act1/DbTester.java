@@ -1,7 +1,9 @@
 package com.M.act1;
 
+import com.M.act1.models.Car;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import com.M.act1.repository.CarRepository;
 
 @Component
 public class DbTester implements CommandLineRunner {
