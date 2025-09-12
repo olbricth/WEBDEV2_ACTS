@@ -60,7 +60,6 @@ public class CarController {
         carService.updateCar(car);
         return "redirect:/";
     }
-
     @GetMapping("/delete/{id}")
     public String deleteCar(@PathVariable Long id) {
         carService.deleteCarById(id);

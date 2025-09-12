@@ -1,44 +1,38 @@
 package com.M.act1.service;
 
-import org.springframework.stereotype.Service;
 import com.M.act1.models.Car;
+import com.M.act1.repository.CarRepository;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CarService {
 
-    // Example: In-memory list, replace with repository later
-    private final List<Car> cars = new java.util.ArrayList<>();
-    private Long nextId = 1L;
+    private final CarRepository carRepository;
+
+    public CarService(CarRepository carRepository) {
+        this.carRepository = carRepository;
+    }
 
     public List<Car> getAllCars() {
-        return cars;
+        return carRepository.findAll(); // ✅ get all from DB
     }
 
     public void addCar(Car car) {
-        car.setCarId(nextId++);
-        cars.add(car);
+        carRepository.save(car); // ✅ save to DB
     }
 
     public Optional<Car> getCarById(Long id) {
-        return cars.stream().filter(c -> c.getCarId().equals(id)).findFirst();
+        return carRepository.findById(id); // ✅ fetch from DB
     }
 
     public void updateCar(Car car) {
-        getCarById(car.getCarId()).ifPresent(existing -> {
-            existing.setLicensePlateNumber(car.getLicensePlateNumber());
-            existing.setMake(car.getMake());
-            existing.setModel(car.getModel());
-            existing.setYear(car.getYear());
-            existing.setColor(car.getColor());
-            existing.setBodyType(car.getBodyType());
-            existing.setEngineType(car.getEngineType());
-            existing.setTransmission(car.getTransmission());
-        });
+        carRepository.save(car); // ✅ save updated version to DB
     }
 
     public void deleteCarById(Long id) {
-        cars.removeIf(c -> c.getCarId().equals(id));
+        carRepository.deleteById(id); // ✅ delete from DB
     }
 }

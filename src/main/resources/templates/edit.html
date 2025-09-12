@@ -3,88 +3,133 @@
 <head>
     <title>Edit Car</title>
     <style>
+        /* === Global === */
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background-color: #2c2c2c;
+            color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: #111;
+            border-radius: 16px;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.08);
+            padding: 30px;
             max-width: 600px;
-            margin: 30px auto;
+            margin: 40px auto;
         }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 25px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
         label {
-            display: block;
-            margin-top: 15px;
             font-weight: bold;
+            margin-bottom: 5px;
         }
-        input, select {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px 15px;
-            background-color: #4CAF50;
-            color: white;
+
+        input {
+            padding: 12px;
+            border-radius: 12px;
             border: none;
-            cursor: pointer;
+            background-color: #333;
+            color: #f5f5f5;
+            font-size: 15px;
+            transition: all 0.2s;
         }
-        button:hover {
-            background-color: #45a049;
+
+        input:focus {
+            outline: none;
+            background-color: #444;
         }
-        a {
-            display: inline-block;
-            margin-top: 20px;
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 12px;
+            background-color: #444;
+            color: #fff;
             text-decoration: none;
-            color: #555;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #666;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background-color: #222;
+        }
+
+        .btn-primary:hover {
+            background-color: #555;
+        }
+
+        .btn-secondary {
+            background-color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #777;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-<h1>Edit Car</h1>
+<div class="container">
+    <h1>Edit Car</h1>
 
+    <form th:action="@{/edit/{id}(id=${car.carId})}" th:object="${car}" method="post">
+        <input type="hidden" th:field="*{carId}" />
 
-<form th:action="@{/edit/{id}(id=${car.carId})}" th:object="${car}" method="post">
+        <label for="licensePlateNumber">License Plate Number:</label>
+        <input type="text" id="licensePlateNumber" th:field="*{licensePlateNumber}" required />
 
+        <label for="make">Make:</label>
+        <input type="text" id="make" th:field="*{make}" required />
 
-    <input type="hidden" th:field="*{carId}" />
+        <label for="model">Model:</label>
+        <input type="text" id="model" th:field="*{model}" required />
 
+        <label for="year">Year:</label>
+        <input type="number" id="year" th:field="*{year}" required />
 
-    <label for="licensePlateNumber">License Plate Number:</label>
-    <input type="text" id="licensePlateNumber" th:field="*{licensePlateNumber}" />
+        <label for="color">Color:</label>
+        <input type="text" id="color" th:field="*{color}" required />
 
+        <label for="bodyType">Body Type:</label>
+        <input type="text" id="bodyType" th:field="*{bodyType}" required />
 
-    <label for="make">Make:</label>
-    <input type="text" id="make" th:field="*{make}" />
+        <label for="engineType">Engine Type:</label>
+        <input type="text" id="engineType" th:field="*{engineType}" required />
 
+        <label for="transmission">Transmission:</label>
+        <input type="text" id="transmission" th:field="*{transmission}" required />
 
-    <label for="model">Model:</label>
-    <input type="text" id="model" th:field="*{model}" />
-
-
-    <label for="year">Year:</label>
-    <input type="number" id="year" th:field="*{year}" />
-
-
-    <label for="color">Color:</label>
-    <input type="text" id="color" th:field="*{color}" />
-
-
-    <label for="bodyType">Body Type:</label>
-    <input type="text" id="bodyType" th:field="*{bodyType}" />
-
-
-    <label for="engineType">Engine Type:</label>
-    <input type="text" id="engineType" th:field="*{engineType}" />
-
-
-    <label for="transmission">Transmission:</label>
-    <input type="text" id="transmission" th:field="*{transmission}" />
-
-
-    <button type="submit">Save</button>
-</form>
-
-
-<a href="/">Back to List</a>
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">💾 Save</button>
+            <a href="/" class="btn btn-secondary">⬅ Back to List</a>
+        </div>
+    </form>
+</div>
 </body>
 </html>
-
-
