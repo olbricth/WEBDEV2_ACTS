@@ -2,14 +2,14 @@ package com.M.act1.controllers;
 
 import com.M.act1.models.Car;
 import com.M.act1.service.CarService;
-import com.M.act1.exceptions.CarNotFoundException;
-import jakarta.validation.Valid;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/cars")
+@CrossOrigin(origins = "*")
 public class CarController {
 
     private final CarService carService;
@@ -18,51 +18,42 @@ public class CarController {
         this.carService = carService;
     }
 
-    @GetMapping("/")
-    public String viewCars(Model model) {
-        model.addAttribute("cars", carService.getAllCars());
-        return "index";
+    @GetMapping
+    public List<Car> getAllCars() {
+        return carService.getAllCars();
     }
 
-    @GetMapping("/add")
-    public String showAddForm(Model model) {
-        model.addAttribute("car", new Car());
-        model.addAttribute("formTitle", "Add New Car");
-        return "form";
+    @GetMapping("/{id}")
+    public ResponseEntity<Car> getCarById(@PathVariable Long id) {
+        return carService.getCarById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/add")
-    public String addCar(@Valid @ModelAttribute Car car, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            model.addAttribute("formTitle", "Add New Car");
-            return "form";
-        }
-        carService.addCar(car);
-        return "redirect:/";
+    @PostMapping
+    public ResponseEntity<Car> addCar(@RequestBody Car car) {
+        Car savedCar = carService.addCar(car);
+        return ResponseEntity.ok(savedCar);
     }
 
-    @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Long id, Model model) {
-        Car car = carService.getCarById(id)
-                .orElseThrow(() -> new CarNotFoundException("Car with ID " + id + " not found."));
-        model.addAttribute("car", car);
-        model.addAttribute("formTitle", "Edit Car");
-        return "form";
-    }
-
-    @PostMapping("/edit/{id}")
-    public String updateCar(@PathVariable Long id, @Valid @ModelAttribute Car car, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            model.addAttribute("formTitle", "Edit Car");
-            return "form";
-        }
+    @PutMapping("/{id}")
+    public ResponseEntity<Car> updateCar(@PathVariable Long id, @RequestBody Car car) {
         car.setCarId(id);
-        carService.updateCar(car);
-        return "redirect:/";
+        try {
+            Car updatedCar = carService.updateCar(car);
+            return ResponseEntity.ok(updatedCar);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
-    @GetMapping("/delete/{id}")
-    public String deleteCar(@PathVariable Long id) {
-        carService.deleteCarById(id);
-        return "redirect:/";
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCar(@PathVariable Long id) {
+        try {
+            carService.deleteCarById(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
