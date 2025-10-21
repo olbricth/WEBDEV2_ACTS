@@ -30,6 +30,12 @@ public class CarController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/test")
+    public String test() {
+        return "✅ Car API is working!";
+    }
+
+
     @PostMapping
     public ResponseEntity<Car> addCar(@RequestBody Car car) {
         Car savedCar = carService.addCar(car);

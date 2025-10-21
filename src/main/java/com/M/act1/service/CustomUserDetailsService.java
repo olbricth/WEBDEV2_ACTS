@@ -1,4 +1,4 @@
-package com.M.act1.security;
+package com.M.act1.service;
 
 import com.M.act1.models.User;
 import com.M.act1.repository.UserRepository;
