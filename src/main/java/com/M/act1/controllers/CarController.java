@@ -2,8 +2,10 @@ package com.M.act1.controllers;
 
 import com.M.act1.models.Car;
 import com.M.act1.service.CarService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -52,14 +54,20 @@ public class CarController {
             return ResponseEntity.notFound().build();
         }
     }
-
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCar(@PathVariable Long id) {
-        try {
-            carService.deleteCarById(id);
-            return ResponseEntity.noContent().build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> deleteCar(@PathVariable long id) {
+        Long carId;
+
+//        System.out.println(id);
+//        try {
+//            carId = Long.parseLong(id.trim());
+//        } catch (NumberFormatException e) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid car ID: " + id);
+//        }
+
+        carService.deleteCarById(id);
+        return ResponseEntity.noContent().build();
     }
+
+
 }

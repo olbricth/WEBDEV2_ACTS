@@ -2,7 +2,9 @@ package com.M.act1.service;
 
 import com.M.act1.models.Car;
 import com.M.act1.repository.CarRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -47,12 +49,12 @@ public class CarService {
                 }).orElseThrow(() -> new RuntimeException("Car not found with id " + car.getCarId()));
     }
 
-    // Delete a car by ID
     public void deleteCarById(Long id) {
-        if (carRepository.existsById(id)) {
-            carRepository.deleteById(id);
-        } else {
-            throw new RuntimeException("Car not found with id " + id);
-        }
+        Car car = carRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Car not found with id " + id
+                ));
+        carRepository.delete(car);
     }
+
 }

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Inventory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col items-center p-8">
+
+
+<div class="w-full max-w-5xl bg-white shadow-md rounded-lg p-6">
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-semibold text-gray-700">Car Inventory</h1>
+        <button onclick="openCreateModal()" class="bg-pink-300 text-white px-4 py-2 rounded hover:bg-pink-700">Add Car</button>
+    </div>
+
+
+    <table class="w-full border-collapse">
+        <thead class="bg-gray-200">
+        <tr>
+            <th class="p-2 border">No.</th>
+            <th class="p-2 border">Make</th>
+            <th class="p-2 border">Model</th>
+            <th class="p-2 border">Year</th>
+            <th class="p-2 border">Color</th>
+            <th class="p-2 border">Actions</th>
+        </tr>
+        </thead>
+        <tbody id="carTableBody"></tbody>
+    </table>
+</div>
+
+
+<!-- Modal -->
+<div id="carModal" class="hidden fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+    <div class="bg-white rounded-lg w-96 p-6">
+        <h2 id="modalTitle" class="text-xl font-semibold mb-4"></h2>
+        <form id="carForm" onsubmit="saveCar(event)">
+            <input type="hidden" id="carId">
+            <div class="mb-2">
+                <label class="block text-gray-700">Make</label>
+                <input id="carMake" class="border p-2 w-full rounded" required>
+            </div>
+            <div class="mb-2">
+                <label class="block text-gray-700">Model</label>
+                <input id="carModel" class="border p-2 w-full rounded" required>
+            </div>
+            <div class="mb-2">
+                <label class="block text-gray-700">Year</label>
+                <input id="carYear" type="number" class="border p-2 w-full rounded" required>
+            </div>
+            <div class="mb-2">
+                <label class="block text-gray-700">Color</label>
+                <input id="carColor" class="border p-2 w-full rounded" required>
+            </div>
+            <div class="flex justify-end mt-4 space-x-2">
+                <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
+                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-pink-700">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script src="js/main.js"></script>
+</body>
+</html>
