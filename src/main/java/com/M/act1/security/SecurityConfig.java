@@ -19,21 +19,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // ✅ Disable CSRF (lets you use POST/PUT/DELETE from Postman)
                 .csrf(csrf -> csrf.disable())
-
-                // ✅ Make all API routes fully public
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/**").permitAll()
+                        .requestMatchers("/api/**").permitAll() // allow all API endpoints
                         .anyRequest().permitAll()
                 )
-
-                // ✅ No sessions, no redirects
-                .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-
-                // ✅ Disable both form login and HTTP Basic
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .formLogin(form -> form.disable())
                 .httpBasic(basic -> basic.disable())
                 .logout(logout -> logout.disable());

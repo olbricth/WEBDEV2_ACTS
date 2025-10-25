@@ -16,14 +16,21 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    // Save new user (register)
     public void saveUser(User user) {
-        // ✅ Encode password before saving
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        // ✅ Assign default role
         user.setRole("ROLE_USER");
-
-        // ✅ Save to DB
         userRepository.save(user);
+    }
+
+    // Find user by username (used for login)
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    // Compare raw and encoded password
+    public boolean checkPassword(String rawPassword, String hashedPassword) {
+        return passwordEncoder.matches(rawPassword, hashedPassword);
+
     }
 }

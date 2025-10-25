@@ -37,10 +37,9 @@ public class CarController {
         return "✅ Car API is working!";
     }
 
-
     @PostMapping
     public ResponseEntity<Car> addCar(@RequestBody Car car) {
-        Car savedCar = carService.addCar(car);
+        Car savedCar = carService.addCar(car); // saves to DB
         return ResponseEntity.ok(savedCar);
     }
 
